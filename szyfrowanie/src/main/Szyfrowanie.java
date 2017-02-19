@@ -12,8 +12,8 @@ public class Szyfrowanie {
 		Scanner scSlowa = null;
 		Scanner scKlucze = null;
 		try {
-			scSlowa = new Scanner(new File("/home/mjab/git/szyfrowanie/tj.txt"));
-			scKlucze = new Scanner(new File("/home/mjab/git/szyfrowanie/klucze.txt"));
+			scSlowa = new Scanner(new File("tj.txt"));
+			scKlucze = new Scanner(new File("klucze.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
