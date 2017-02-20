@@ -1,7 +1,6 @@
 package twu;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Wypadek implements Comparable<Wypadek>{
 	
@@ -40,9 +39,9 @@ public class Wypadek implements Comparable<Wypadek>{
 		this.rejestracja = rejestracja;
 		this.kwotaOdszkodowania = kwotaOdszkodowania;
 	}
+	
 	public int compareTo(Wypadek o) {
 		return this.kwotaOdszkodowania.compareTo(o.kwotaOdszkodowania);
 	}
 	
-
 }

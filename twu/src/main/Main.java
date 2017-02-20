@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import twu.Auto;
 import twu.Miejscowosc;
@@ -122,23 +125,67 @@ public class Main {
 			}
 		}
 
-		 // Zadanie 3;
+		// Zadanie 3;
 		Float sumaOdszkodowan2006 = 0.0f;
 		Float sumaOdszkodowan2007 = 0.0f;
 		Calendar cal2006 = Calendar.getInstance();
 		cal2006.set(Calendar.YEAR, 2006);
 		Calendar cal2007 = Calendar.getInstance();
 		cal2007.set(Calendar.YEAR, 2007);
-		
+
 		for (Wypadek wypadek : listaWypadkow) {
 			if (cal2006.get(Calendar.YEAR) == wypadek.getDataWypadku().get(Calendar.YEAR)) {
 				sumaOdszkodowan2006 += wypadek.getKwotaOdszkodowania();
-				//System.out.println(cal.get(Calendar.YEAR) + " " + wypadek.getDataWypadku().get(Calendar.YEAR));
+				// System.out.println(cal.get(Calendar.YEAR) + " " +
+				// wypadek.getDataWypadku().get(Calendar.YEAR));
 			} else if (cal2007.get(Calendar.YEAR) == wypadek.getDataWypadku().get(Calendar.YEAR)) {
 				sumaOdszkodowan2007 += wypadek.getKwotaOdszkodowania();
 			}
 		}
-		System.out.println("3. " + "Suma odszkodowań 2006: " + sumaOdszkodowan2006 + ", 2007: " + sumaOdszkodowan2007 + ".");
-	}
+		System.out.println(
+				"3. " + "Suma odszkodowań 2006: " + sumaOdszkodowan2006 + ", 2007: " + sumaOdszkodowan2007 + ".");
 
+		// Zadanie 4:
+		Map<String, Integer> listaMarekWypadkow = new TreeMap<String, Integer>();
+		for (Auto auto : listaAut) {
+			if (auto.getListaWypadkow().size() > 0) {
+				if (listaMarekWypadkow.containsKey(auto.getMarka())) {
+					listaMarekWypadkow.put(auto.getMarka(),
+							(listaMarekWypadkow.get(auto.getMarka()) + auto.getListaWypadkow().size()));
+				} else {
+					listaMarekWypadkow.put(auto.getMarka(), auto.getListaWypadkow().size());
+				}
+			}
+		}
+
+		// KOMPERATOR!
+		Map.Entry<String, Integer> markaNawiecejWypadkow = listaMarekWypadkow.entrySet().iterator().next();
+		for (Map.Entry<String, Integer> marka : listaMarekWypadkow.entrySet()) {
+			if (marka.getValue() > markaNawiecejWypadkow.getValue()) {
+				markaNawiecejWypadkow = marka;
+			}
+		}
+		System.out.println("4. Najwięcej wypadków miała marka " + markaNawiecejWypadkow.getKey() + " która miała "
+				+ markaNawiecejWypadkow.getValue() + " wypadków.");
+
+		// Zadanie 5.
+		Map<TypMiejscowosci, Integer> listaWlascicieliWypadkow = new HashMap<TypMiejscowosci, Integer>();
+		for (Osoba osoba : listaWlascicieli) {
+			TypMiejscowosci miejscowosc = osoba.getMiejscowosc().getTypMiejscowosci();
+			for (Auto auto : osoba.listaAut()) {
+				if (listaWlascicieliWypadkow.containsKey(miejscowosc)) {
+					listaWlascicieliWypadkow.put(miejscowosc,
+							(listaWlascicieliWypadkow.get(miejscowosc) + auto.getListaWypadkow().size()));
+				} else {
+					listaWlascicieliWypadkow.put(miejscowosc, auto.getListaWypadkow().size());
+				}
+			}
+		}
+
+		System.out.println("5. Ilość wypadków z podziałem na tymy miejscowości: ");
+		for (Map.Entry<TypMiejscowosci, Integer> miastoWypadki : listaWlascicieliWypadkow.entrySet()) {
+			System.out.println(miastoWypadki.getKey() + " " + miastoWypadki.getValue());
+		}
+
+	}
 }

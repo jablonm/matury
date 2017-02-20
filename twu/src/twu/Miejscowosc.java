@@ -32,4 +32,26 @@ public class Miejscowosc {
 		this.setTypMiejscowosci(typMiejscowosci);
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((typMiejscowosci == null) ? 0 : typMiejscowosci.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Miejscowosc other = (Miejscowosc) obj;
+		if (typMiejscowosci != other.typMiejscowosci)
+			return false;
+		return true;
+	}
+	
 }
